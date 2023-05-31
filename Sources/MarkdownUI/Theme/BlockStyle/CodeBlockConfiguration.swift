@@ -4,6 +4,7 @@ import SwiftUI
 ///
 /// The theme ``Theme/codeBlock`` block style receives a `CodeBlockConfiguration`
 /// input in its `body` closure.
+@available(iOS 15, *)
 public struct CodeBlockConfiguration {
   /// A type-erased view of a Markdown code block.
   public struct Label: View {

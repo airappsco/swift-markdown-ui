@@ -12,6 +12,8 @@ import SwiftUI
 /// }
 /// .markdownImageProvider(.asset)
 /// ```
+
+@available(iOS 15, *)
 public struct AssetImageProvider: ImageProvider {
   private let name: (URL) -> String
   private let bundle: Bundle?
@@ -28,7 +30,7 @@ public struct AssetImageProvider: ImageProvider {
     self.bundle = bundle
   }
 
-  public func makeImage(url: URL?) -> some View {
+    public func makeImage(url: URL?) -> some View {
     if let url = url, let image = self.image(url: url) {
       ResizeToFit(idealSize: image.size) {
         Image(platformImage: image)
@@ -37,7 +39,7 @@ public struct AssetImageProvider: ImageProvider {
     }
   }
 
-  private func image(url: URL) -> PlatformImage? {
+    private func image(url: URL) -> PlatformImage? {
     #if os(macOS)
       if let bundle, bundle != .main {
         return bundle.image(forResource: self.name(url))
@@ -50,6 +52,7 @@ public struct AssetImageProvider: ImageProvider {
   }
 }
 
+@available(iOS 15, *)
 extension ImageProvider where Self == AssetImageProvider {
   /// An image provider that loads images from resources located in an app or a module.
   ///

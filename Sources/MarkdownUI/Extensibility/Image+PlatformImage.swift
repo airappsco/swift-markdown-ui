@@ -6,6 +6,7 @@ import SwiftUI
   typealias PlatformImage = NSImage
 #endif
 
+@available(iOS 15, *)
 extension Image {
   init(platformImage: PlatformImage) {
     #if os(iOS) || os(tvOS) || os(watchOS)

@@ -1,10 +1,12 @@
 import Foundation
 
+@available(iOS 15, *)
 enum FontPropertiesAttribute: AttributedStringKey {
   typealias Value = FontProperties
   static let name = "fontProperties"
 }
 
+@available(iOS 15, *)
 extension AttributeScopes {
   var markdownUI: MarkdownUIAttributes.Type {
     MarkdownUIAttributes.self
@@ -16,6 +18,7 @@ extension AttributeScopes {
   }
 }
 
+@available(iOS 15, *)
 extension AttributeDynamicLookup {
   subscript<T: AttributedStringKey>(
     dynamicMember keyPath: KeyPath<AttributeScopes.MarkdownUIAttributes, T>
@@ -24,6 +27,7 @@ extension AttributeDynamicLookup {
   }
 }
 
+@available(iOS 15, *)
 extension AttributedString {
   func resolvingFonts() -> AttributedString {
     var output = self

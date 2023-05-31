@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 struct TableBounds {
   var rowCount: Int {
     self.rows.count
@@ -70,6 +71,7 @@ struct TableBounds {
   }
 }
 
+@available(iOS 15, *)
 extension View {
   func tableCellBounds(forRow row: Int, column: Int) -> some View {
     self.anchorPreference(key: TableCellBoundsPreference.self, value: .bounds) { anchor in
@@ -116,6 +118,7 @@ private struct TableCellIndex: Hashable {
   var column: Int
 }
 
+@available(iOS 15, *)
 private struct TableCellBoundsPreference: PreferenceKey {
   static let defaultValue: [TableCellIndex: Anchor<CGRect>] = [:]
 

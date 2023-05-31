@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 extension Theme {
   /// The default Markdown theme.
   ///

@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 extension Theme {
   /// A theme that mimics the GitHub style.
   ///
@@ -165,6 +166,7 @@ extension Theme {
     }
 }
 
+@available(iOS 15, *)
 extension Color {
   fileprivate static let text = Color(
     light: Color(rgba: 0x0606_06ff), dark: Color(rgba: 0xfbfb_fcff)

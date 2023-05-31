@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 struct DefaultImageView: View {
   @StateObject private var viewModel = DefaultImageViewModel()
 

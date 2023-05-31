@@ -2,6 +2,7 @@ import SwiftUI
 
 // MARK: - Deprecated after 2.0.2:
 
+@available(iOS 15, *)
 extension BlockStyle where Configuration == BlockConfiguration {
   @available(
     *,
@@ -26,6 +27,7 @@ extension BlockStyle where Configuration == BlockConfiguration {
   }
 }
 
+@available(iOS 15, *)
 extension View {
   @available(
     *,
@@ -65,6 +67,7 @@ extension View {
   }
 }
 
+@available(iOS 15, *)
 extension Theme {
   @available(
     *,
@@ -333,6 +336,7 @@ public struct MarkdownImageHandler {
   }
 }
 
+@available(iOS 15, *)
 extension Markdown {
   @available(
     *,
@@ -351,6 +355,7 @@ extension Markdown {
   }
 }
 
+@available(iOS 15, *)
 extension View {
   @available(
     *,
@@ -371,6 +376,8 @@ extension View {
    "BlockStyle" types.
    """
 )
+
+@available(iOS 15, *)
 public struct MarkdownStyle: Hashable {
   public struct Font: Hashable {
     public static var largeTitle: Self { fatalError("Unimplemented") }
@@ -481,6 +488,7 @@ public struct MarkdownStyle: Hashable {
   }
 }
 
+@available(iOS 15, *)
 extension View {
   @available(
     *,

@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 extension EnvironmentValues {
   var listLevel: Int {
     get { self[ListLevelKey.self] }

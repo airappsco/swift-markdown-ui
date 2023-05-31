@@ -1,5 +1,6 @@
 import Foundation
 
+@available(iOS 15, *)
 /// A text style that sets the text font family.
 public struct FontFamily: TextStyle {
   private let family: FontProperties.Family
@@ -10,7 +11,7 @@ public struct FontFamily: TextStyle {
     self.family = family
   }
 
-  public func _collectAttributes(in attributes: inout AttributeContainer) {
+    public func _collectAttributes(in attributes: inout AttributeContainer) {
     attributes.fontProperties?.family = self.family
   }
 }

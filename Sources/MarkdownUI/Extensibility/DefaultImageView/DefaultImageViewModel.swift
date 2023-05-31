@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 final class DefaultImageViewModel: ObservableObject {
   enum State: Equatable {
     case notRequested

@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// An inline image provider that loads images from resources located in an app or a module.
+@available(iOS 15, *)
 public struct AssetInlineImageProvider: InlineImageProvider {
   private let name: (URL) -> String
   private let bundle: Bundle?
@@ -17,11 +18,12 @@ public struct AssetInlineImageProvider: InlineImageProvider {
     self.bundle = bundle
   }
 
-  public func image(with url: URL, label: String) async throws -> Image {
+    public func image(with url: URL, label: String) async throws -> Image {
     .init(self.name(url), bundle: self.bundle, label: Text(label))
   }
 }
 
+@available(iOS 15, *)
 extension InlineImageProvider where Self == AssetInlineImageProvider {
   /// An inline image provider that loads images from resources located in an app or a module.
   ///

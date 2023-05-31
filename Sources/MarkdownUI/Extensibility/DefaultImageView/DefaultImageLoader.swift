@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(iOS 15, *)
 final class DefaultImageLoader {
   static let shared = DefaultImageLoader()
 

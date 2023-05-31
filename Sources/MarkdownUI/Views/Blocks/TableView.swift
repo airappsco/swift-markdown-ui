@@ -51,6 +51,7 @@ struct TableView: View {
   }
 }
 
+@available(iOS 15, *)
 extension HorizontalAlignment {
   fileprivate init(_ rawTableColumnAlignment: RawTableColumnAlignment) {
     switch rawTableColumnAlignment {

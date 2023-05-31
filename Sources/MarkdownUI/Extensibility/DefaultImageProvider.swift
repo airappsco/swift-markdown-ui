@@ -1,6 +1,7 @@
 import SwiftUI
 
 /// The default image provider, which loads images from the network.
+@available(iOS 15, *)
 public struct DefaultImageProvider: ImageProvider {
   private let urlSession: URLSession
 
@@ -15,6 +16,7 @@ public struct DefaultImageProvider: ImageProvider {
   }
 }
 
+@available(iOS 15, *)
 extension ImageProvider where Self == DefaultImageProvider {
   /// The default image provider, which loads images from the network.
   ///
