@@ -100,7 +100,8 @@ import SwiftUI
 ///   // More block styles...
 /// ```
 public struct Theme {
-  /// The default text style.
+  public var onImageTap: ((String) -> Void)?
+  /// The default text style
   public var text: TextStyle = EmptyTextStyle()
 
   /// The inline code style.

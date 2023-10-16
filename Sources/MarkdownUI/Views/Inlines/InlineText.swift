@@ -26,7 +26,7 @@ struct InlineText: View {
           link: self.theme.link
         ),
         images: self.inlineImages,
-        attributes: attributes
+        attributes: attributes, onImageTap: self.theme.onImageTap
       )
     }
     .task(id: self.inlines) {
