@@ -17,8 +17,8 @@ public struct AssetInlineImageProvider: InlineImageProvider {
     self.bundle = bundle
   }
 
-  public func image(with url: URL, label: String) async throws -> Image {
-    .init(self.name(url), bundle: self.bundle, label: Text(label))
+  public func image(with url: URL, label: String) async throws -> some View {
+    Image(self.name(url), bundle: self.bundle, label: Text(label))
   }
 }
 

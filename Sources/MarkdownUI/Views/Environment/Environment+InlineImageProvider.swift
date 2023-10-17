@@ -7,18 +7,18 @@ extension View {
   ///                                  or a custom inline image provider that you define by creating a type that
   ///                                  conforms to the ``InlineImageProvider`` protocol.
   /// - Returns: A view that uses the specified inline image provider for itself and its child views.
-  public func markdownInlineImageProvider(_ inlineImageProvider: InlineImageProvider) -> some View {
-    self.environment(\.inlineImageProvider, inlineImageProvider)
+  public func markdownInlineImageProvider<I: InlineImageProvider>(_ inlineImageProvider: I) -> some View {
+      self.environment(\.inlineImageProvider, .init(inlineImageProvider))
   }
 }
 
 extension EnvironmentValues {
-  var inlineImageProvider: InlineImageProvider {
+  var inlineImageProvider: AnyInlineImageProvider {
     get { self[InlineImageProviderKey.self] }
     set { self[InlineImageProviderKey.self] = newValue }
   }
 }
 
 private struct InlineImageProviderKey: EnvironmentKey {
-  static let defaultValue: InlineImageProvider = .default
+    static let defaultValue: AnyInlineImageProvider = .init(.default)
 }

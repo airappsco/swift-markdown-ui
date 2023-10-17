@@ -3,7 +3,7 @@ import SwiftUI
 
 /// The default inline image provider, which loads images from the network.
 public struct DefaultInlineImageProvider: InlineImageProvider {
-  public func image(with url: URL, label: String) async throws -> Image {
+  public func image(with url: URL, label: String) async throws -> some View {
     try await Image(
       DefaultNetworkImageLoader.shared.image(from: url),
       scale: 1,

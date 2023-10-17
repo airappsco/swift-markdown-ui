@@ -1,12 +1,12 @@
 import SwiftUI
 
-struct InlineText: View {
+struct InlineText<Content: View>: View {
   @Environment(\.inlineImageProvider) private var inlineImageProvider
   @Environment(\.baseURL) private var baseURL
   @Environment(\.imageBaseURL) private var imageBaseURL
   @Environment(\.theme) private var theme
 
-  @State private var inlineImages: [String: Image] = [:]
+  @State private var inlineImages: [String: Content] = [:]
 
   private let inlines: [InlineNode]
 
@@ -26,7 +26,7 @@ struct InlineText: View {
           link: self.theme.link
         ),
         images: self.inlineImages,
-        attributes: attributes, onImageTap: self.theme.onImageTap
+        attributes: attributes
       )
     }
     .task(id: self.inlines) {
@@ -34,25 +34,27 @@ struct InlineText: View {
     }
   }
 
-  private func loadInlineImages() async throws -> [String: Image] {
+  private func loadInlineImages() async throws -> [String: Content] {
     let images = Set(self.inlines.compactMap(\.imageData))
     guard !images.isEmpty else { return [:] }
 
-    return try await withThrowingTaskGroup(of: (String, Image).self) { taskGroup in
+    return try await withThrowingTaskGroup(of: (String, Content?).self) { taskGroup in
       for image in images {
         guard let url = URL(string: image.source, relativeTo: self.imageBaseURL) else {
           continue
         }
 
         taskGroup.addTask {
-          (image.source, try await self.inlineImageProvider.image(with: url, label: image.alt))
+            (image.source, try await self.inlineImageProvider.image(with: url, label: image.alt) as? Content)
         }
       }
 
-      var inlineImages: [String: Image] = [:]
+      var inlineImages: [String: Content] = [:]
 
       for try await result in taskGroup {
-        inlineImages[result.0] = result.1
+          if let image = result.1 {
+              inlineImages[result.0] = image
+          }
       }
 
       return inlineImages

@@ -12,5 +12,20 @@ public protocol InlineImageProvider {
   /// - Parameters:
   ///   - url: The URL of the image to display.
   ///   - label: The accessibility label associated with the image.
-  func image(with url: URL, label: String) async throws -> Image
+  associatedtype Body: View
+    
+  func image(with url: URL, label: String) async throws -> Body
+}
+
+struct AnyInlineImageProvider: InlineImageProvider {
+  private let _makeImage: (URL, String) async throws-> AnyView
+
+  init<I: InlineImageProvider>(_ imageProvider: I) {
+    self._makeImage = {
+        try await AnyView(imageProvider.image(with: $0, label: $1))
+    }
+  }
+    func image(with url: URL, label: String) async throws -> some View {
+        try await self._makeImage(url, label)
+    }
 }

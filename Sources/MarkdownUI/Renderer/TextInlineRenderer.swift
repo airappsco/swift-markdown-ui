@@ -1,26 +1,24 @@
 import SwiftUI
 
 extension Sequence where Element == InlineNode {
-  func renderText(
+    func renderText<Content: View>(
     baseURL: URL?,
     textStyles: InlineTextStyles,
-    images: [String: Image],
-    attributes: AttributeContainer,
-    onImageTap: ((String) -> Void)?
+    images: [String: Content],
+    attributes: AttributeContainer
   ) -> some View {
     var renderer = TextInlineRenderer(
       baseURL: baseURL,
       textStyles: textStyles,
       images: images,
-      attributes: attributes,
-      onImageTap: onImageTap
+      attributes: attributes
     )
     renderer.render(self)
     return renderer.list
   }
 }
 
-private struct TextInlineRenderer {
+private struct TextInlineRenderer<Content: View> {
   var result = Text("")
   lazy var list = VStack {
     ForEach(results) {
@@ -30,22 +28,20 @@ private struct TextInlineRenderer {
   private var results: [InlinerResult<AnyView>] = [.init(source: nil, content: AnyView(Text("")))]
   private let baseURL: URL?
   private let textStyles: InlineTextStyles
-  private let images: [String: Image]
+  private let images: [String: Content]
   private let attributes: AttributeContainer
   private var shouldSkipNextWhitespace = false
-  private let onImageTap: ((String) -> Void)?
+
   init(
     baseURL: URL?,
     textStyles: InlineTextStyles,
-    images: [String: Image],
-    attributes: AttributeContainer,
-    onImageTap: ((String) -> Void)?
+    images: [String: Content],
+    attributes: AttributeContainer
   ) {
     self.baseURL = baseURL
     self.textStyles = textStyles
     self.images = images
     self.attributes = attributes
-    self.onImageTap = onImageTap
   }
 
   mutating func render<S: Sequence>(_ inlines: S) where S.Element == InlineNode {
@@ -63,7 +59,7 @@ private struct TextInlineRenderer {
     case .html(let content):
       self.renderHTML(content)
     case .image(let source, _):
-      self.renderImage(source, onImageTap: onImageTap)
+      self.renderImage(source)
     default:
       self.defaultRender(inline)
     }
@@ -100,13 +96,10 @@ private struct TextInlineRenderer {
     }
   }
 
-  private mutating func renderImage(_ source: String, onImageTap: ((String) -> Void)?) {
+  private mutating func renderImage(_ source: String) {
      
     if let image = self.images[source] {
         let resultImage = image
-            .onTapGesture {
-                onImageTap?(source)
-            }
         self.results.append(InlinerResult(source: source, content: AnyView(resultImage)))
         self.result = Text("")
         self.results.append(InlinerResult(source: nil, content: AnyView(Text(""))))
