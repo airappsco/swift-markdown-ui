@@ -20,12 +20,12 @@ extension Sequence where Element == InlineNode {
 
 private struct TextInlineRenderer<Content: View> {
   var result = Text("")
-  lazy var list = VStack {
+    lazy var list = VStack(alignment: .leading) {
     ForEach(results) {
         $0.content
     }
   }
-  private var results: [InlinerResult<AnyView>] = [.init(source: nil, content: AnyView(Text("")))]
+  private var results: [InlinerResult] = [.init(source: nil, content: AnyView(Text("")))]
   private let baseURL: URL?
   private let textStyles: InlineTextStyles
   private let images: [String: Content]
@@ -121,12 +121,12 @@ private struct TextInlineRenderer<Content: View> {
   }
 }
 
-struct InlinerResult<Content: View>: Identifiable {
+struct InlinerResult: Identifiable {
     let id = UUID().uuidString
     let source: String?
-    var content: Content
+    var content: AnyView
     
-    mutating func changeContent(to content: Content) {
-        self.content = content
+    mutating func changeContent(to content: AnyView) {
+        self.content = AnyView(content.frame(maxWidth: .infinity, alignment: .leading))
     }
 }
