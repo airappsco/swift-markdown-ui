@@ -2,9 +2,9 @@ import SwiftUI
 
 struct BlockSequence<Data, Content>: View
 where
-  Data: Sequence,
-  Data.Element: Hashable,
-  Content: View
+Data: Sequence,
+Data.Element: Hashable,
+Content: View
 {
   @Environment(\.multilineTextAlignment) private var textAlignment
   @Environment(\.tightSpacingEnabled) private var tightSpacingEnabled
@@ -24,7 +24,7 @@ where
 
   var body: some View {
     VStack(alignment: self.textAlignment.alignment.horizontal, spacing: 0) {
-      ForEach(self.data, id: \.self) { element in
+      ForEach(self.data, id: \.index) { element in
         self.content(element.index, element.value)
           .onPreferenceChange(BlockMarginsPreference.self) { value in
             self.blockMargins[element.hashValue] = value

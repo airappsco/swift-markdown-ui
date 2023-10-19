@@ -5,8 +5,14 @@ struct Indexed<Value> {
   let value: Value
 }
 
-extension Indexed: Equatable where Value: Equatable {}
-extension Indexed: Hashable where Value: Hashable {}
+extension Indexed: Equatable where Value: Equatable {
+//    static func == (lhs: Self, rhs: Self) -> Bool {
+//        lhs.value == rhs.value //&& lhs.value == rhs.value
+//    }
+}
+extension Indexed: Hashable where Value: Hashable {
+
+}
 
 extension Sequence {
   func indexed() -> [Indexed<Element>] {
