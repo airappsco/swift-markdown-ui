@@ -1,52 +1,48 @@
 import Foundation
 
 enum InlineNode: Hashable {
-  case text(String)
-  case softBreak
-  case lineBreak
-  case code(String)
-  case html(String)
-  case emphasis(children: [InlineNode])
-  case strong(children: [InlineNode])
-  case strikethrough(children: [InlineNode])
-  case link(destination: String, children: [InlineNode])
-  case image(source: String, children: [InlineNode])
+    case text(String)
+    case softBreak
+    case lineBreak
+    case code(String)
+    case html(String)
+    case emphasis([InlineNode])
+    case strong([InlineNode])
+    case strikethrough([InlineNode])
+    case link(destination: String, [InlineNode])
+    case image(source: String, [InlineNode])
 }
 
 extension InlineNode {
-  var children: [InlineNode] {
-    get {
-      switch self {
-      case .emphasis(let children):
-        return children
-      case .strong(let children):
-        return children
-      case .strikethrough(let children):
-        return children
-      case .link(_, let children):
-        return children
-      case .image(_, let children):
-        return children
-      default:
-        return []
-      }
+    var children: [InlineNode] {
+        get {
+            switch self {
+            case .emphasis(let children),
+                 .strong(let children),
+                 .strikethrough(let children),
+                 .link(_, let children),
+                 .image(_, let children):
+                return children
+            default:
+                return []
+            }
+        }
     }
-
-    set {
-      switch self {
-      case .emphasis:
-        self = .emphasis(children: newValue)
-      case .strong:
-        self = .strong(children: newValue)
-      case .strikethrough:
-        self = .strikethrough(children: newValue)
-      case .link(let destination, _):
-        self = .link(destination: destination, children: newValue)
-      case .image(let source, _):
-        self = .image(source: source, children: newValue)
-      default:
-        break
-      }
+    
+    func withChildren(_ newValue: [InlineNode]) -> InlineNode {
+        switch self {
+        case .emphasis:
+            return .emphasis(newValue)
+        case .strong:
+            return .strong(newValue)
+        case .strikethrough:
+            return .strikethrough(newValue)
+        case .link(let destination, _):
+            return .link(destination: destination, newValue)
+        case .image(let source, _):
+            return .image(source: source, newValue)
+        default:
+            return self
+        }
     }
-  }
 }
